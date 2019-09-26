@@ -44,6 +44,15 @@ private:
         return result;
     }
 
+    bool isFinish_(TNode node) const {
+        for (TVertex vertex = 0; vertex < automaton_.getVertexCount(); vertex++) {
+            if (automaton_.isFinish(vertex) && ((node >> vertex) & 1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     void addNodes_(TAutomaton& result_automaton) const {
         std::unordered_map<TMask_, TNode>      processed;
         std::stack< std::pair<TMask_, TNode> > nodes_in_process;
@@ -69,6 +78,9 @@ private:
                     if (processed.find(new_node) == processed.end()) {
                         processed[new_node] = nodes_count;
                         nodes_in_process.push({new_node, nodes_count++});
+                        if (isFinish_(new_node)) {
+                            result_automaton.addFinish(new_node);
+                        }
                     }
 
                     result_automaton.addEdge(cur_node_number, processed[new_node], alpha);
