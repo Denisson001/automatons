@@ -2,7 +2,7 @@
 
 typedef typename NMinimalAutomaton::TVertex TVertex;
 typedef typename NMinimalAutomaton::TAlpha  TAlpha;
-typedef unsigned int                          TEdge;
+typedef unsigned int                        TEdge;
 
 int main() {
     bool    logging = false;
