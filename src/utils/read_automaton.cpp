@@ -1,5 +1,16 @@
 #include "../headers/automaton.h"
 
+/*  ===  Формат ввода автомата === 
+ * В первой строке три числа - число состояний, размер алфавита, число завершающих состояний
+ * Во второй строке - номера завершающих состояний
+ * В третьей строке - число переходов
+ * В остальных строках переходы в формате
+ * (начальное состояние, конечное состояние, буква)
+ * буква - число от 0 до (размер алфавита - 1)
+ */
+
+namespace NReadAutomaton {
+
 typedef typename NAutomaton::TVertex TVertex;
 typedef typename NAutomaton::TAlpha  TAlpha;
 typedef unsigned int                 TEdge;
@@ -31,3 +42,5 @@ NAutomaton::TAutomaton read_automaton() {
 
     return automaton;
 }
+
+} // end of NReadAutomaton

@@ -2,8 +2,8 @@
 #include "../utils/read_automaton.cpp"
 
 int main() {
-    const auto automaton1 = read_automaton();
-    const auto automaton2 = read_automaton();
+    const auto automaton1 = NReadAutomaton::read_automaton();
+    const auto automaton2 = NReadAutomaton::read_automaton();
 
     NSearchDistinguishingWord::TSearchDistinguishingWord searcher(automaton1, automaton2);
 

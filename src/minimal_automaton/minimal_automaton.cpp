@@ -4,6 +4,7 @@
 #include <unordered_set>
 
 // возвращает МПДКА по ПДКА
+// все состояния должны быть достижимы из стартового
 
 namespace NMinimalAutomaton {
 

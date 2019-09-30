@@ -8,7 +8,7 @@ int main() {
     logging = true;
 #endif
 
-    const auto automaton = read_automaton();
+    const auto automaton = NReadAutomaton::read_automaton();
 
     automaton.print();
 
