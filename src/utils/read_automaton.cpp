@@ -1,19 +1,14 @@
-#include "determine_automaton.cpp"
+#include "../headers/automaton.h"
 
-typedef typename NDetermineAutomaton::TVertex TVertex;
-typedef typename NDetermineAutomaton::TAlpha  TAlpha;
-typedef unsigned int                          TEdge;
+typedef typename NAutomaton::TVertex TVertex;
+typedef typename NAutomaton::TAlpha  TAlpha;
+typedef unsigned int                 TEdge;
 
-int main() {
-    bool    logging = false;
+NAutomaton::TAutomaton read_automaton() {
     TVertex vertex_count;
     TVertex finish_count;
     TAlpha  alphabet_size;
     TEdge   edge_count;
-
-#ifdef LOGGING
-    logging = true;
-#endif
 
     std::cin >> vertex_count >> alphabet_size >> finish_count;
 
@@ -34,11 +29,5 @@ int main() {
         automaton.addEdge(start, finish, alpha);
     }
 
-    automaton.print();
-
-    NDetermineAutomaton::TDetermineAutomaton determine(automaton, logging);
-
-    const auto determined_automaton = determine.getResultAutomaton();
-
-    determined_automaton.print();
+    return automaton;
 }

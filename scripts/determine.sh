@@ -1,6 +1,6 @@
 #!/bin/sh
 
-g++ ../src/main_determine.cpp -std=c++17 -DLOGGING -o determine
+g++ ../src/determine/main.cpp -std=c++17 -DLOGGING -o determine
 
 ./determine < input.txt
 

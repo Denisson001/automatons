@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <stdexcept>
+#include <optional>
 
 
 namespace NAutomaton {
@@ -70,7 +71,7 @@ public:
     }
 
     /*
-     * Изначально можно указать размер автомата и алфавита.
+     * Изначально можно указать размер автомата и алфавита;
      * По ходу добавления переходов размер может автоматически изменяться
      */
     TAutomaton(TVertex vertex_count = 1, TAlpha alphabet_size = 0) :
@@ -132,6 +133,23 @@ public:
         return alphabet_size_;
     }
 
+    /*
+     * Проверяет принимается ли слово автоматом;
+     * Слово передается как список букв;
+     * Корректно работает только для ДКА
+     * */
+    bool isAcceptable(const std::vector<TAlpha>& word_vector) const {
+        TVertex cur_vertex = start_;
+        for (const auto& alpha : word_vector) {
+            const auto next_vertex = getNextVertex_(cur_vertex, alpha);
+            if (!next_vertex) {
+                return false;
+            }
+            cur_vertex = *next_vertex;
+        }
+        return is_finish_[cur_vertex];
+    }
+
     /* Выводит автомат в human-readable виде */
     void print() const {
         std::cout << "Vertex count  : " << vertex_count_ << "\n";
@@ -179,6 +197,19 @@ private:
             graph_.resize(vertex_count_);
             is_finish_.resize(vertex_count_, false);
         }
+    }
+
+    /*
+     * Возвращает любое состояние, в которое есть переход из vertex по alpha;
+     * Если такого перехода нет, возвращает null
+     * */
+    std::optional<TVertex> getNextVertex_(TVertex vertex, TAlpha alpha) const {
+        for (auto it = getEdgeIterator(vertex); !it.isEnd(); ++it) {
+            if (it.getAlpha() == alpha) {
+                return it.getFinish();
+            }
+        }
+        return std::nullopt;
     }
 };
 

@@ -1,4 +1,4 @@
-#include "automaton.h"
+#include "../headers/automaton.h"
 
 #include <algorithm>
 #include <unordered_set>
@@ -10,7 +10,6 @@ namespace NMinimalAutomaton {
 typedef NAutomaton::TAutomaton TAutomaton;
 typedef NAutomaton::TAlpha     TAlpha;
 typedef NAutomaton::TVertex    TVertex;
-typedef TVertex                TVertexType;
 
 class TMinimalAutomaton {
 public:
@@ -25,15 +24,17 @@ public:
 
     /* Возвращает итоговый МПДКА */
     TAutomaton getResultAutomaton() const {
-        return build_minimal_automaton_();
+        return buildMinimalAutomaton_();
     }
 
 private:
+    typedef TVertex TVertexType_;
+
     const bool        logging_;   // флаг для логирования
     const TAutomaton& automaton_; // исходный автомат
 
     /* Возвращает итоговый МПДКА */
-    TAutomaton build_minimal_automaton_() const {
+    TAutomaton buildMinimalAutomaton_() const {
         TAutomaton result_automaton;
         result_automaton.increaseAlphabetSizeTo(automaton_.getAlphabetSize());
         addVertices_(result_automaton);
@@ -48,7 +49,7 @@ private:
     void addVertices_(TAutomaton& automaton) const {
         TVertex                             vertex_count  = automaton_.getVertexCount();
         TAlpha                              alphabet_size = automaton_.getAlphabetSize();
-        std::vector<TVertexType>            vertex_type(vertex_count); // номер класса эквивалентности состояния в исходном автомате
+        std::vector<TVertexType_>           vertex_type(vertex_count); // номер класса эквивалентности состояния в исходном автомате
         std::vector< std::vector<TVertex> > types(2);                  // список списоков эквивалентных состояний
         std::vector< std::vector<TVertex> > graph(vertex_count, std::vector<TVertex>(alphabet_size)); // исходный автомат в виде графа
 
@@ -75,11 +76,11 @@ private:
             std::vector< std::vector<TVertex> > new_types; // новые классы эквивалентности
 
             for (const auto& type : types) { // берем один класс эквивалентности
-                std::vector< std::pair< std::vector<TVertexType>, TVertex> > types_vectors; // список для векторов классов эквивалентности
+                std::vector< std::pair< std::vector<TVertexType_>, TVertex> > types_vectors; // список для векторов классов эквивалентности
                                                                                             // для каждого состояния
 
                 for (const auto& vertex : type) {
-                    std::vector<TVertexType> types_vector(alphabet_size); // вектор классов эквивалентности, в которые ведут переходы
+                    std::vector<TVertexType_> types_vector(alphabet_size); // вектор классов эквивалентности, в которые ведут переходы
                                                                           // по каждой букве из одного состояния
 
                     for (TAlpha alpha = 0; alpha < alphabet_size; ++alpha) {
@@ -130,10 +131,10 @@ private:
 
     /* Добавляет переходы в новый автомат */
     void addEdges_(TAutomaton& automaton, const std::vector< std::vector<TVertex> >& graph,
-                                          const std::vector<TVertexType>& vertex_type) const {
-        std::unordered_set<TVertexType> used_types; // сет уже рассмотренных классов эквивалентности
+                                          const std::vector<TVertexType_>& vertex_type) const {
+        std::unordered_set<TVertexType_> used_types; // сет уже рассмотренных классов эквивалентности
         for (TVertex vertex = 0; vertex < automaton_.getVertexCount(); ++vertex) {
-            TVertexType type = vertex_type[vertex]; // класс эквивалентности состояния из старого автомата
+            TVertexType_ type = vertex_type[vertex]; // класс эквивалентности состояния из старого автомата
             if (used_types.find(type) == used_types.end()) { // если еще не был рассмотрен
                 used_types.insert(type);
                 for (TAlpha alpha = 0; alpha < automaton_.getAlphabetSize(); ++alpha) { // добавляем переходы

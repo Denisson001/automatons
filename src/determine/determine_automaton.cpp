@@ -1,4 +1,4 @@
-#include "automaton.h"
+#include "../headers/automaton.h"
 #include <unordered_map>
 #include <stack>
 
