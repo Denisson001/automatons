@@ -1,5 +1,6 @@
 Vertex count  : 6
 Alphabet size : 2
+Start         : 0
 Finishes      : 1 4 
 Edges
 Vertex Finish Alpha :
@@ -13,9 +14,10 @@ Vertex Finish Alpha :
 4 5 0
 4 1 1
 5 4 1
-
+Edge count : 10
 Vertex count  : 10
 Alphabet size : 2
+Start         : 0
 Finishes      : 1 3 5 6 7 8 9 
 Edges
 Vertex Finish Alpha :
@@ -37,4 +39,4 @@ Vertex Finish Alpha :
 8 1 1
 9 4 0
 9 1 1
-
+Edge count : 18
