@@ -128,6 +128,8 @@ private:
         }
 
         addEdges_(automaton, graph, vertex_type);
+    	
+	automaton.setStart(vertex_type[automaton_.getStart()]);
     }
 
     /* Добавляет переходы в новый автомат */
@@ -140,7 +142,9 @@ private:
                 used_types.insert(type);
                 for (TAlpha alpha = 0; alpha < automaton_.getAlphabetSize(); ++alpha) { // добавляем переходы
                     automaton.addEdge(type, vertex_type[graph[vertex][alpha]], alpha);
-                }
+                    std::cout << vertex << ' ' << alpha << ' ' << type << ' ' << graph[vertex][alpha]
+					<< ' '<< vertex_type[graph[vertex][alpha]]  << "\n";
+		}
             }
             if (automaton_.isFinish(vertex)) { // проверяем является ли состояние в новом автомате завершающим
                 automaton.addFinish(type);

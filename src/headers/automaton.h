@@ -155,6 +155,7 @@ public:
     void print() const {
         std::cout << "Vertex count  : " << vertex_count_ << "\n";
         std::cout << "Alphabet size : " << alphabet_size_ << "\n";
+	std::cout << "Start         : " << start_ << "\n";
 
         std::cout << "Finishes      : ";
         for (TVertex vertex = 0; vertex < vertex_count_; ++vertex) {
@@ -164,14 +165,16 @@ public:
         }
         std::cout << "\n";
 
+	std::size_t edge_count = 0;
         std::cout << "Edges\n";
         std::cout << "Vertex Finish Alpha :\n";
         for (TVertex vertex = 0; vertex < vertex_count_; ++vertex) {
             for (const auto edge : graph_[vertex]) {
                 std::cout << vertex << ' ' << edge.finish << ' ' << edge.alpha << "\n";
-            }
+	        ++edge_count;        
+	    }
         }
-        std::cout << "\n";
+        std::cout << "Edge count : " << edge_count << "\n";
     }
 
 private:
