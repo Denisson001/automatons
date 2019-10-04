@@ -1,5 +1,8 @@
 # Formal langs - Automaton scripts
 
+# TODO
+баг в determine с совпадающими завершающим и стартовым состояниями.
+
 # Project
 
 - Исходники лежат в директории `src`, тесты в `tests`.
